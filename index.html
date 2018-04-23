@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <title>QR APP</title>
+        <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+     <script src="qrcode.min.js"></script>
+    <style>
+      body{
+        background-color: #51B0FF;
+      }
+      #qrcode {
+        width:120px;
+        height:320px;
+        margin-top:15px;
+        margin-left: 35%;
+      }
+    </style>
+  </head>
+  <body>
+
+
+      <div class="container" style="">
+        <h1 style="color:white;">QR APP</h1>
+        <div>
+
+
+          <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="name" type="text" class="validate">
+                    <label for="last_name">Company Name</label>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <button class="btn waves-effect waves-light" onclick="CreateQR(event)">Add to database</button>
+            <div id="qrcode" class="center-align"></div>
+            <script type="text/javascript">
+            function CreateQR(e){
+                  e.preventDefault();
+                  var QrData = {name: $('#name').val(), email: $('#email').val(), url: $('#url').val()}
+                new QRCode(document.getElementById("qrcode"), "http://10.0.0.73:3000/data.html/?name="+QrData.name+"&email="+QrData.email+"&url="+QrData.url);
+              }
+            </script>
+          </div>
+        </div>
+        </div>
+      </div>
+    </body>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/core.js"></script>
+    <script>
+
+
+
+      console.log("wat");
+      var parsedUrl = new URL(window.location.href);
+  console.log(parsedUrl.searchParams.get("id")); // 123
+  console.log(parsedUrl.searchParams.get("id2")); // 123
+      $(function () {
+
+        var socket = io();
+        $('form').submit(function(){
+				var data = "name=me&email=me%40me.com&password=thankthelord";
+
+
+
+
+
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+
+          return false;
+
+        });
+        socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text(msg));
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+      });
+    </script>
+	<script>
+
+
+	</script>
+  </body>
+</html>
